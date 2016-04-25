@@ -1,12 +1,12 @@
 # tomato-cli [![Build Status](https://img.shields.io/circleci/project/lynzz/tomato-cli/master.svg)](https://circleci.com/gh/lynzz/tomato-cli) [![npm package](https://img.shields.io/npm/v/tomato-cli.svg)](https://www.npmjs.com/package/tomato-cli)
 
-用命令生成工程脚手架, fork from [vue-cli](https://github.com/vuejs/vue-cli)
+用命令生成项目脚手架, fork from [vue-cli](https://github.com/vuejs/vue-cli)
 
 > 工程文件模板改用 ejs, 因为大量组件已用了 handebars，会有冲突，因此需注意引用第三方的文件有 ejs 写法的文件
 
 ### 安装
 
-Prerequisites: [Node.js](https://nodejs.org/en/) (>5.x preferred) and [Git](https://git-scm.com/).
+需要: [Node.js](https://nodejs.org/en/) (>5.x preferred) and [Git](https://git-scm.com/).
 
 ``` bash
 $ npm install -g tomato-cli
@@ -18,28 +18,28 @@ $ npm install -g tomato-cli
 $ tomato init <template-name> <project-name>
 ```
 
-Example:
+举例:
 
 ``` bash
-$ tomato init ftl my-project
+$ tomato init java-webapp my-project
 ```
 
-The above command pulls the template from [tomato-templates/ftl](https://github.com/tomato-templates/ftl), prompts for some information, and generates the project at `./my-project/`.
+模板来自 [tomato-templates/java-webapp](https://github.com/tomato-templates/java-webapp), 最终生成的文件在 `./my-project/`.
 
-### Official Templates
+### 线上模板
 
-The purpose of official Vue project templates are to provide opinionated, battery-included development tooling setups so that users can get started with actual app code as fast as possible. However, these templates are un-opinionated in terms of how you structure your app code and what libraries you use in addition to Vue.js.
+线上模板只是提供工作上常用的模板
 
-All official project templates are repos in the [tomato-templates organization](https://github.com/tomato-templates). When a new template is added to the organization, you will be able to run `tomato init <template-name> <project-name>` to use that template. You can also run `tomato list` to see all available official templates.
+所有线上模板在 [tomato-templates organization](https://github.com/tomato-templates)。 如有新模块被添加，可运行 `tomato init <template-name> <project-name>` 来运用模板。 你也可以 `tomato list` 查看线上可用的模板。
 
-Current available templates include:
+目前已有模板:
 
 - [java-webapp](https://github.com/tomato-templates/java-webapp) - A java webapp + freemarker + seajs + spm
 
 
-### Custom Templates
+### 自定义模板
 
-It's unlikely to make everyone happy with the official templates. You can simply fork an official template and then use it via `tomato-cli` with:
+如果线上模板不能满足你的需求，发现 github 已有模板刚好适合你的需求，这时可以这样做:
 
 ``` bash
 tomato init username/repo my-project
@@ -51,29 +51,29 @@ The shorthand repo notation is passed to [download-git-repo](https://github.com/
 
 If you would like to download from a private repository use the `--clone` flag and the cli will use `git clone` so your SHH keys are used.
 
-### Local Templates
+### 本地模板
 
-Instead of a GitHub repo, you can also use a template on your local file system:
+你可能需要运用本地的模板，可以这样做:
 
 ``` bash
 tomato init ~/fs/path/to-custom-template my-project
 ```
 
-### Writing Custom Templates from Scratch
+### 怎么写自定义模板
 
-- A template repo **must** have a `template` directory that holds the template files.
+- 你的模板包必须有一个 `template` 目录，用来存放模板文件的目录 
 
-- A template repo **may** have a `meta.json` file that provides metadata for the template. The `meta.json` can contain the following fields:
+- 你的模板包必须有一个 `meta.json` ，这是提供模板的默认配置文件，它可以包含如下字段:
 
-  - `prompts`: used to collect user options data;
+  - `prompts`: 用来提示用户操作的信息;
 
-  - `filters`: used to conditional filter files to render.
+  - `filters`: 过滤不想被 `render` 的文件;
 
-  - `completeMessage`: the message to be displayed to the user when the template has been generated. You can include custom instruction here.
+  - `completeMessage`: 当模板生成完成后，要显示给用户的信息;
 
-#### prompts
+#### 模板提示信息
 
-The `prompts` field in `meta.json` should be an object hash containing prompts for the user. For each entry, the key is the variable name and the value is an [Inquirer.js question object](https://github.com/SBoudrias/Inquirer.js/#question). Example:
+在 `meta.json` 里有一个用户信息对象 `prompts`，它的 `key` 就是变量名，值就是一个 [Inquirer.js question object](https://github.com/SBoudrias/Inquirer.js/#question)。 例如:
 
 ``` json
 {
@@ -87,11 +87,11 @@ The `prompts` field in `meta.json` should be an object hash containing prompts f
 }
 ```
 
-After all prompts are finished, all files inside `template` will be rendered using [ejs](https://github.com/tj/ejs), with the prompt results as the data.
+这些参数值会通过 [ejs](https://github.com/tj/ejs), 把值 `render` 到 `template` 目录里的模板文件
 
-##### Conditional Prompts
+##### 条件提示信息
 
-A prompt can be made conditional by adding a `when` field, which should be a JavaScript expression evaluated with data collected from previous prompts. For example:
+添加 `when` 字段, 可做条件式提示，例如:
 
 ``` json
 {
@@ -114,12 +114,11 @@ A prompt can be made conditional by adding a `when` field, which should be a Jav
 }
 ```
 
-The prompt for `lintConfig` will only be triggered when the user answered yes to the `lint` prompt.
+当用户确认选择 `lint` ，`lintConfig` 才能被触发生效。 
 
+#### 文件过滤
 
-#### File filters
-
-The `filters` field in `meta.json` should be an object hash containing file filtering rules. For each entry, the key is a [minimatch glob pattern](https://github.com/isaacs/minimatch) and the value is a JavaScript expression evaluated in the context of prompt answers data. Example:
+在 `meta.json` 文件的 `filters`, 它是一个文件过滤规则对象。 它的 `key` 是一个 [minimatch glob pattern](https://github.com/isaacs/minimatch)，它的值是一个提示信息作用域下的具体一个值. Example:
 
 ``` json
 {
@@ -129,6 +128,4 @@ The `filters` field in `meta.json` should be an object hash containing file filt
 }
 ```
 
-Files under `test` will only be generated if the user answered yes to the prompt for `needTests`.
-
-Note that the `dot` option for minimatch is set to `true` so glob patterns would also match dotfiles by default.
+只用用户选择需要 `needTests` , `test` 目录下的文件才会被创建

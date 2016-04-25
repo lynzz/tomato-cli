@@ -1,7 +1,7 @@
 {
   "name": "tomato-cli",
-  "version": "1.0.0",
-  "description": "java webapp genertaor",
+  "version": "1.0.2",
+  "description": "Simple CLI for scaffolding web projects",
   "main": "index.js",
   "scripts": {
     "test": "npm run lint && npm run e2e",
