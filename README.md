@@ -129,3 +129,7 @@ tomato init ~/fs/path/to-custom-template my-project
 ```
 
 只用用户选择需要 `needTests` , `test` 目录下的文件才会被创建
+
+#### TODO
+
+- [ ] 支持 gitlab 内网包的下载
