@@ -1,0 +1,39 @@
+{
+  "schema": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "label": "Project name"
+    },
+    "description": {
+      "type": "string",
+      "required": true,
+      "label": "Project description",
+      "default": "A Vue.js project"
+    },
+    "version": {
+      "type": "string",
+      "label": "Version",
+      "default": "1.0.0"
+    },
+    "author": {
+      "type": "string",
+      "label": "Author"
+    },
+    "private": {
+      "type": "boolean",
+      "default": true
+    },
+    "pick": {
+      "type": "list",
+      "choices": [
+        "yes",
+        "no"
+      ]
+    }
+  },
+  "filters": {
+    "src/*.js": "pick === 'yes'",
+    "**/*.ftl": "pick === 'no'"
+  }
+}
